@@ -1,0 +1,244 @@
+1. CONCEITOS TEÓRICOS
+
+Banco de Dados
+Conjunto organizado de dados.
+
+Tabela
+Estrutura com linhas e colunas que representa uma entidade.
+
+Linha (Registro)
+Representa um item completo.
+
+Coluna (Campo)
+Define um atributo e o tipo de dado.
+
+Chave Primária (PRIMARY KEY)
+Identificador único. Não pode repetir nem ser nulo.
+
+Chave Estrangeira (FOREIGN KEY)
+Cria relação entre tabelas.
+
+Relacionamentos:
+
+1:1 → Um para um
+1:N → Um para muitos
+N:N → Muitos para muitos
+
+2. TIPOS DE DADOS (COM DEFINIÇÃO)
+Texto
+
+VARCHAR(n)
+Armazena texto de tamanho variável até o limite definido.
+Mais eficiente que CHAR quando o tamanho dos dados varia.
+
+CHAR(n)
+Armazena texto de tamanho fixo.
+Se o valor for menor que o tamanho definido, ele preenche com espaços.
+
+TEXT
+Armazena grandes quantidades de texto (como descrições longas).
+
+Numéricos
+
+INT
+Armazena números inteiros.
+
+BIGINT
+Armazena números inteiros muito grandes.
+
+SMALLINT
+Armazena números inteiros menores (economiza espaço).
+
+DECIMAL(x,y)
+Armazena números com precisão fixa.
+x = total de dígitos
+y = quantidade de casas decimais
+Ideal para valores financeiros.
+
+FLOAT
+Armazena números com ponto flutuante (menos preciso).
+
+DOUBLE
+Semelhante ao FLOAT, porém com maior precisão.
+
+Data e Hora
+
+DATE
+Armazena apenas data (ano, mês, dia).
+
+DATETIME
+Armazena data e hora.
+
+TIMESTAMP
+Armazena data e hora automaticamente, geralmente usado para registros automáticos.
+
+TIME
+Armazena apenas hora.
+
+YEAR
+Armazena apenas o ano.
+
+Outros
+
+BOOLEAN
+Armazena valores lógicos: verdadeiro (1) ou falso (0).
+
+3. CONSTRAINTS (COM DEFINIÇÃO)
+
+NOT NULL
+Define que o campo não pode ficar vazio.
+
+UNIQUE
+Garante que todos os valores da coluna sejam únicos.
+
+PRIMARY KEY
+Define um identificador único para cada registro.
+Não pode conter valores nulos nem repetidos.
+
+FOREIGN KEY
+Cria um vínculo entre tabelas, garantindo integridade referencial.
+
+DEFAULT
+Define um valor padrão caso nenhum valor seja informado no INSERT.
+
+AUTO_INCREMENT
+Gera automaticamente valores numéricos sequenciais (geralmente usado em IDs).
+
+CHECK
+Define uma condição que os valores da coluna devem obedecer.
+Exemplo: idade >= 18
+
+4. COMANDOS SQL (COMPLETO)
+BANCO DE DADOS
+
+CREATE DATABASE → cria banco
+DROP DATABASE → apaga banco
+ALTER DATABASE → altera banco
+USE → seleciona banco
+
+TABELAS
+
+CREATE TABLE → cria tabela
+DROP TABLE → remove tabela
+TRUNCATE TABLE → apaga todos os dados da tabela
+ALTER TABLE → altera estrutura
+
+ALTER TABLE (DETALHES IMPORTANTES)
+
+ADD → adiciona coluna
+DROP COLUMN → remove coluna
+MODIFY COLUMN → altera tipo da coluna
+CHANGE COLUMN → renomeia coluna
+RENAME TO → renomeia tabela
+
+ADD PRIMARY KEY
+DROP PRIMARY KEY
+
+ADD FOREIGN KEY
+DROP FOREIGN KEY
+
+INSERÇÃO DE DADOS
+
+INSERT INTO → insere dados
+INSERT INTO ... VALUES
+INSERT INTO ... SELECT
+
+CONSULTAS
+
+SELECT → consulta dados
+
+SELECT * → tudo
+SELECT coluna → específico
+
+DISTINCT → remove duplicados
+
+WHERE → filtro
+
+AND / OR / NOT → operadores lógicos
+
+LIKE → busca por padrão
+IN → múltiplos valores
+BETWEEN → intervalo
+
+ORDER BY → ordenação (ASC / DESC)
+
+LIMIT → limita resultados
+
+GROUP BY → agrupa dados
+
+HAVING → filtro após agrupamento
+
+JOINS (ESSENCIAL)
+
+INNER JOIN → retorna correspondência
+LEFT JOIN → tudo da esquerda
+RIGHT JOIN → tudo da direita
+FULL JOIN → tudo (depende do banco)
+
+ATUALIZAÇÃO
+
+UPDATE → atualiza dados
+
+SET → define novo valor
+WHERE → define qual registro
+
+REMOÇÃO
+
+DELETE → remove registros
+TRUNCATE → limpa tabela
+
+FUNÇÕES
+
+COUNT() → contar
+SUM() → somar
+AVG() → média
+MAX() → maior valor
+MIN() → menor valor
+
+ÍNDICES
+
+CREATE INDEX → cria índice
+DROP INDEX → remove índice
+
+VIEWS
+
+CREATE VIEW → cria visão
+DROP VIEW → remove visão
+
+CONTROLE
+
+COMMIT → salva alterações
+ROLLBACK → desfaz alterações
+
+5. EXEMPLOS
+
+CREATE DATABASE
+CREATE DATABASE Loja;
+USE
+USE Loja;
+CREATE TABLE
+CREATE TABLE Clientes (
+    id INT AUTO_INCREMENT,
+    nome VARCHAR(100),
+    PRIMARY KEY (id)
+);
+
+INSERT
+INSERT INTO Clientes (nome) VALUES ('Maria');
+
+SELECT
+SELECT * FROM Clientes;
+
+WHERE
+SELECT * FROM Clientes WHERE nome = 'Maria';
+
+UPDATE
+UPDATE Clientes SET nome = 'João' WHERE id = 1;
+
+DELETE
+DELETE FROM Clientes WHERE id = 1;
+
+JOIN
+SELECT c.nome, p.id_pedido
+FROM clientes c
+INNER JOIN pedidos p ON c.id_cliente = p.id_cliente;
