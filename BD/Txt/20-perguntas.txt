@@ -1,0 +1,39 @@
+1. Quantos veículos existem cadastrados?
+
+2. Quantos clientes existem?
+
+3. Quantos contratos foram feitos entre duas datas?
+
+4. Quantos veículos estão disponíveis?
+
+5. Qual o valor total recebido em pagamentos pagos?
+
+6. Quantas reservas estão ativas?
+
+7. Quais clientes fizeram reservas?
+
+8. Quantos contratos cada cliente possui?
+
+9. Qual veículo foi mais reservado?
+
+10. Qual a média de valor dos contratos?
+
+11. Quais contratos ainda não foram pagos?
+
+12. Quantas devoluções estão pendentes?
+
+13. Qual o total de multas por veículo?
+
+14. Qual o custo total de manutenção por veículo?
+
+15. Quais veículos nunca foram reservados?
+
+16. Quantos contratos existem por mês?
+
+17. Qual cliente mais gastou em contratos?
+
+18. Quais veículos estão em manutenção?
+
+19. Quantos pagamentos foram feitos por método?
+
+20. Quais contratos têm devolução após a data prevista?
