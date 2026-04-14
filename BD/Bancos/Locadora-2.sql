@@ -1,0 +1,260 @@
+DROP DATABASE IF EXISTS Locadora;
+CREATE DATABASE Locadora;
+USE Locadora;
+
+CREATE TABLE cliente (
+    id_cliente INT AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    cpf VARCHAR(11) UNIQUE,
+    telefone VARCHAR(15),
+    email VARCHAR(100),
+    PRIMARY KEY (id_cliente)
+);
+
+CREATE TABLE categoria (
+    id_categoria INT AUTO_INCREMENT,
+    nome VARCHAR(50) NOT NULL,
+    descricao TEXT,
+    PRIMARY KEY (id_categoria)
+);
+
+CREATE TABLE veiculo (
+    id_veiculo INT AUTO_INCREMENT,
+    modelo VARCHAR(100),
+    placa VARCHAR(10) UNIQUE,
+    id_categoria INT,
+    status VARCHAR(20),
+    PRIMARY KEY (id_veiculo),
+    FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria)
+);
+
+CREATE TABLE reserva (
+    id_reserva INT AUTO_INCREMENT,
+    id_cliente INT,
+    id_veiculo INT,
+    data_reserva DATETIME,
+    status VARCHAR(20),
+    PRIMARY KEY (id_reserva),
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente),
+    FOREIGN KEY (id_veiculo) REFERENCES veiculo(id_veiculo)
+);
+
+CREATE TABLE contrato (
+    id_contrato INT AUTO_INCREMENT,
+    id_reserva INT,
+    data_inicio DATE,
+    data_fim DATE,
+    valor_total DECIMAL(10,2),
+    PRIMARY KEY (id_contrato),
+    FOREIGN KEY (id_reserva) REFERENCES reserva(id_reserva)
+);
+
+CREATE TABLE devolucao (
+    id_devolucao INT AUTO_INCREMENT,
+    id_contrato INT,
+    data_devolucao DATE,
+    status VARCHAR(20),
+    PRIMARY KEY (id_devolucao),
+    FOREIGN KEY (id_contrato) REFERENCES contrato(id_contrato)
+);
+
+CREATE TABLE pagamento (
+    id_pagamento INT AUTO_INCREMENT,
+    id_contrato INT,
+    valor DECIMAL(10,2),
+    metodo VARCHAR(50),
+    status VARCHAR(20),
+    PRIMARY KEY (id_pagamento),
+    FOREIGN KEY (id_contrato) REFERENCES contrato(id_contrato)
+);
+
+CREATE TABLE multa (
+    id_multa INT AUTO_INCREMENT,
+    id_veiculo INT,
+    descricao TEXT,
+    valor DECIMAL(10,2),
+    PRIMARY KEY (id_multa),
+    FOREIGN KEY (id_veiculo) REFERENCES veiculo(id_veiculo)
+);
+
+CREATE TABLE manutencao (
+    id_manutencao INT AUTO_INCREMENT,
+    id_veiculo INT,
+    descricao TEXT,
+    data_manutencao DATE,
+    custo DECIMAL(10,2),
+    PRIMARY KEY (id_manutencao),
+    FOREIGN KEY (id_veiculo) REFERENCES veiculo(id_veiculo)
+);
+
+INSERT INTO cliente (nome, cpf, telefone, email) VALUES
+('João Silva', '11111111111', '11999999999', 'joao@gmail.com'),
+('Maria Souza', '22222222222', '11988888888', 'maria@gmail.com'),
+('Pedro Lima', '33333333333', '11977777777', 'pedro@gmail.com'),
+('Ana Costa', '44444444444', '11966666666', 'ana@gmail.com'),
+('Lucas Rocha', '55555555555', '11955555555', 'lucas@gmail.com');
+
+INSERT INTO categoria (nome, descricao) VALUES
+('Econômico', 'Carros baratos'),
+('SUV', 'Carros grandes'),
+('Sedan', 'Carros confortáveis'),
+('Luxo', 'Carros premium'),
+('Esportivo', 'Carros rápidos');
+
+INSERT INTO veiculo (modelo, placa, id_categoria, status) VALUES
+('Onix', 'ABC1234', 1, 'Disponível'),
+('HB20', 'DEF5678', 1, 'Disponível'),
+('Compass', 'GHI9012', 2, 'Alugado'),
+('Corolla', 'JKL3456', 3, 'Disponível'),
+('BMW X1', 'MNO7890', 4, 'Manutenção');
+
+INSERT INTO reserva (id_cliente, id_veiculo, data_reserva, status) VALUES
+(1, 1, '2026-04-01 10:00:00', 'Ativa'),
+(2, 2, '2026-04-02 11:00:00', 'Ativa'),
+(3, 3, '2026-04-03 12:00:00', 'Cancelada'),
+(4, 4, '2026-04-04 13:00:00', 'Ativa'),
+(5, 5, '2026-04-05 14:00:00', 'Ativa');
+
+INSERT INTO contrato (id_reserva, data_inicio, data_fim, valor_total) VALUES
+(1, '2026-04-01', '2026-04-05', 500.00),
+(2, '2026-04-02', '2026-04-06', 600.00),
+(3, '2026-04-03', '2026-04-07', 700.00),
+(4, '2026-04-04', '2026-04-08', 800.00),
+(5, '2026-04-05', '2026-04-09', 900.00);
+
+INSERT INTO devolucao (id_contrato, data_devolucao, status) VALUES
+(1, '2026-04-05', 'Concluída'),
+(2, '2026-04-06', 'Concluída'),
+(3, '2026-04-07', 'Pendente'),
+(4, '2026-04-08', 'Concluída'),
+(5, '2026-04-09', 'Pendente');
+
+INSERT INTO pagamento (id_contrato, valor, metodo, status) VALUES
+(1, 500.00, 'Cartão', 'Pago'),
+(2, 600.00, 'Pix', 'Pago'),
+(3, 700.00, 'Boleto', 'Pendente'),
+(4, 800.00, 'Cartão', 'Pago'),
+(5, 900.00, 'Pix', 'Pendente');
+
+INSERT INTO multa (id_veiculo, descricao, valor) VALUES
+(1, 'Atraso', 50.00),
+(2, 'Dano leve', 100.00),
+(3, 'Multa trânsito', 150.00),
+(4, 'Atraso', 80.00),
+(5, 'Dano grave', 300.00);
+
+INSERT INTO manutencao (id_veiculo, descricao, data_manutencao, custo) VALUES
+(1, 'Troca de óleo', '2026-03-01', 200.00),
+(2, 'Revisão geral', '2026-03-05', 300.00),
+(3, 'Pneu', '2026-03-10', 400.00),
+(4, 'Freio', '2026-03-15', 250.00),
+(5, 'Motor', '2026-03-20', 1000.00);
+
+/* 1. Quantos veiculos existem cadastrados? */
+SELECT COUNT(*) FROM veiculo;
+
+/* 2. Quantos clientes existem? */
+SELECT COUNT(*) FROM cliente ;
+
+/* 3. Quantos contratos foram feitos entre duas datas? */
+SELECT count(*) from contrato;
+
+/* 4. Quantos veículos estão disponíveis? */
+SELECT Count(*) from veiculo where status = 'Disponível';
+
+/* 5. Qual o valor total recebido em pagamentos pagos? */
+SELECT sum(valor) from pagamento where status = "Pago";
+
+/* 6. Quantas reservas estão ativas? */
+SELECT Count(*) from reserva where status = "Ativa";
+
+/* 7. Quais clientes fizeram reservas? */
+SELECT Count(*) from reserva;
+
+/* 8. Quantos contratos cada cliente possui? */
+
+SELECT c.nome, COUNT(ct.id_contrato) AS total
+FROM cliente c
+JOIN reserva r ON c.id_cliente = r.id_cliente
+JOIN contrato ct ON r.id_reserva = ct.id_reserva
+GROUP BY c.nome;
+
+/* 9. Qual veículo foi mais reservado? */
+
+SELECT v.modelo, COUNT(r.id_reserva) AS total
+FROM veiculo v
+JOIN reserva r ON v.id_veiculo = r.id_veiculo
+GROUP BY v.modelo
+ORDER BY total DESC
+LIMIT 1;
+
+/* 10. Qual a média de valor dos contratos? */
+
+SELECT AVG(valor_total) FROM contrato;
+
+/* 11. Quais contratos ainda não foram pagos? */
+
+SELECT c.id_contrato
+FROM contrato c
+LEFT JOIN pagamento p ON c.id_contrato = p.id_contrato
+WHERE p.status IS NULL OR p.status != 'Pago';
+
+/* 12. Quantas devoluções estão pendentes? */
+
+SELECT COUNT(*) 
+FROM devolucao
+WHERE status = 'Pendente';
+
+
+/* 13. Qual o total de multas por veículo? */
+
+SELECT id_veiculo, SUM(valor) AS total_multas
+FROM multa
+GROUP BY id_veiculo;
+
+/* 14. Qual o custo total de manutenção por veículo? */
+
+SELECT id_veiculo, SUM(custo) AS total
+FROM manutencao
+GROUP BY id_veiculo;
+
+/* 15. Quais veículos nunca foram reservados? */
+
+SELECT v.modelo
+FROM veiculo v
+LEFT JOIN reserva r ON v.id_veiculo = r.id_veiculo
+WHERE r.id_reserva IS NULL;
+
+/* 16. Quantos contratos existem por mês? */
+
+SELECT MONTH(data_inicio) AS mes, COUNT(*) 
+FROM contrato
+GROUP BY mes;
+
+/* 17. Qual cliente mais gastou em contratos? */
+
+SELECT c.nome, SUM(ct.valor_total) AS total
+FROM cliente c
+JOIN reserva r ON c.id_cliente = r.id_cliente
+JOIN contrato ct ON r.id_reserva = ct.id_reserva
+GROUP BY c.nome
+ORDER BY total DESC
+LIMIT 1;
+
+/* 18. Quais veículos estão em manutenção? */
+
+SELECT modelo
+FROM veiculo	
+WHERE status = 'Manutenção';
+
+/* 19. Quantos pagamentos foram feitos por método? */
+
+SELECT metodo, COUNT(*) 
+FROM pagamento
+GROUP BY metodo;
+
+/*20. Quais contratos têm devolução após a data prevista? */
+
+SELECT c.id_contrato FROM contrato c
+JOIN devolucao d ON c.id_contrato = d.id_contrato
+WHERE d.data_devolucao > c.data_fim;
