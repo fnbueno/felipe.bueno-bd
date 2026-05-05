@@ -1,0 +1,88 @@
+🧱 Entidades (para banco de dados)
+
+Aqui estão as principais entidades que você pode criar com base na história:
+
+👤 Cliente
+ID_Cliente
+Nome
+CPF
+Data_Nascimento
+Email
+Telefone
+Data_Cadastro
+Preferencias_Notificacao
+🏠 Endereço
+ID_Endereco
+ID_Cliente (FK)
+Rua
+Número
+Cidade
+Estado
+CEP
+Complemento
+🛍️ Pedido
+ID_Pedido
+ID_Cliente (FK)
+Data_Pedido
+Valor_Total
+Status_Pedido
+Forma_Pagamento
+Numero_Parcelas
+📦 Item_Pedido
+ID_Item
+ID_Pedido (FK)
+ID_Produto (FK)
+Quantidade
+Preco_Unitario
+👗 Produto
+ID_Produto
+Nome_Produto
+Categoria
+Tamanho
+Cor
+Preco
+Estoque
+💳 Pagamento
+ID_Pagamento
+ID_Pedido (FK)
+Tipo_Pagamento
+Status_Pagamento
+Data_Pagamento
+🚚 Entrega
+ID_Entrega
+ID_Pedido (FK)
+Transportadora
+Data_Envio
+Data_Entrega
+Status_Entrega
+🔄 Troca_Devolucao
+ID_Troca
+ID_Pedido (FK)
+ID_Produto (FK)
+Motivo
+Data_Solicitacao
+Status
+⭐ Programa_Fidelidade
+ID_Fidelidade
+ID_Cliente (FK)
+Pontos_Acumulados
+Pontos_Utilizados
+Nivel_Cliente
+💬 Atendimento
+ID_Atendimento
+ID_Cliente (FK)
+Data_Contato
+Canal (chat, email, telefone)
+Assunto
+Status
+❤️ Lista_Desejos
+ID_Lista
+ID_Cliente (FK)
+ID_Produto (FK)
+Data_Adicao
+📊 Navegacao
+ID_Navegacao
+ID_Cliente (FK)
+ID_Produto (FK)
+Data_Visualizacao
+Acao (visualizou, adicionou ao carrinho, etc.)
